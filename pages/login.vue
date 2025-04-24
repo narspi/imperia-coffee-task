@@ -1,18 +1,50 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useAuthStore } from "@/store/auth";
+
+const authStore = useAuthStore();
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
+
+const login = async () => {
+  try {
+    const { data, error } = await useFetch("/api/auth/login", {
+      method: "POST",
+      body: { email: email.value, password: password.value },
+    });
+
+    if (error.value) {
+      errorMessage.value = error.value.data?.message || "Ошибка авторизации";
+      return;
+    }
+  } catch (err) {
+    errorMessage.value = "Ошибка запроса";
+    console.error(err);
+  }
+};
+</script>
+
 <template>
   <div class="container">
     <div class="login-box">
       <h2>Вход</h2>
-      <form>
+      <form @submit.prevent="login">
         <div class="input-group">
           <label>Логин</label>
-          <input type="text" placeholder="Введите ваш логин" />
+          <input type="email" placeholder="Введите ваш email" v-model="email" />
         </div>
         <div class="input-group">
           <label>Пароль</label>
-          <input type="password" placeholder="Введите ваш пароль" />
+          <input
+            type="password"
+            placeholder="Введите ваш пароль"
+            v-model="password"
+          />
         </div>
         <button type="submit" class="login-button">Войти</button>
       </form>
+      <p v-if="errorMessage">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
