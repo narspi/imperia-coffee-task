@@ -9,18 +9,10 @@ const errorMessage = ref("");
 
 const login = async () => {
   try {
-    const { data, error } = await useFetch("/api/auth/login", {
-      method: "POST",
-      body: { email: email.value, password: password.value },
-    });
-
-    if (error.value) {
-      errorMessage.value = error.value.data?.message || "Ошибка авторизации";
-      return;
-    }
-  } catch (err) {
-    errorMessage.value = "Ошибка запроса";
-    console.error(err);
+    await authStore.login(email.value, password.value);
+    // navigateTo("/account");
+  } catch (e: any) {
+    errorMessage.value = e.message;
   }
 };
 </script>

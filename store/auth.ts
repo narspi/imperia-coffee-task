@@ -1,40 +1,34 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
+import type { User } from "@/types/auth";
 
-interface UserPayloadInterface {
-  username: string;
-  password: string;
-}
+export const useAuthStore = defineStore("auth", () => {
+  const user = ref<User | null>(null);
 
-export const useAuthStore = defineStore("auth", {
-  state: () => ({
-    authenticated: false,
-    loading: false,
-  }),
-  // actions: {
-  //   async authenticateUser({ username, password }: UserPayloadInterface) {
-  //     const { data, pending }: any = await useFetch(
-  //       "https://dummyjson.com/auth/login",
-  //       {
-  //         method: "post",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: {
-  //           username,
-  //           password,
-  //         },
-  //       }
-  //     );
-  //     this.loading = pending;
+  async function login(email: string, password: string) {
+    try {
+      const { data, error } = await useFetch("/api/auth/login", {
+        method: "POST",
+        body: { email, password },
+      });
 
-  //     if (data.value) {
-  //       const token = useCookie("token");
-  //       token.value = data?.value?.token;
-  //       this.authenticated = true;
-  //     }
-  //   },
-  //   logUserOut() {
-  //     const token = useCookie("token");
-  //     this.authenticated = false;
-  //     token.value = null;
-  //   },
-  // },
+      if (error.value) {
+        throw new Error(error.value.data?.message || "Ошибка входа");
+      }
+
+      user.value = data?.value?.user as User;
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  function logout() {
+    user.value = null;
+  }
+
+  return {
+    user,
+    login,
+    logout,
+  };
 });
