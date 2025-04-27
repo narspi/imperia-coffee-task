@@ -1,9 +1,11 @@
 <script setup lang="ts">
-const version = 2 + 1;
+import { useAuthStore } from "@/store/auth";
+const authStore = useAuthStore();
 </script>
 
 <template>
-  <div class="hello">Hello Nuxt {{ version }}!</div>
+  <div>Имя: {{ authStore.user?.name }}</div>
+  <div>Фамилия: {{ authStore.user?.surname }}</div>
 </template>
 
 <style scoped>
