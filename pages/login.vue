@@ -10,7 +10,9 @@ const errorMessage = ref("");
 const login = async () => {
   try {
     await authStore.login(email.value, password.value);
-    // navigateTo("/account");
+    if (authStore.isAuthenticated) {
+      navigateTo("/account");
+    }
   } catch (e: any) {
     errorMessage.value = e.message;
   }

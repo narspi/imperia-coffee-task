@@ -1,4 +1,4 @@
-// plugins/auth.ts
+// Записываем пользователя если есть есть кука
 import { useAuthStore } from "@/store/auth";
 import users from "@/server/database/users.json";
 

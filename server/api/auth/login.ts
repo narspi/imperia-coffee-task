@@ -1,6 +1,7 @@
 import users from "@/server/database/users.json";
 import { readBody, createError, setCookie } from "h3";
 
+// Авторизация пользователя
 export default defineEventHandler(async (event) => {
   // Только POST запросы
   if (event.method !== "POST") {

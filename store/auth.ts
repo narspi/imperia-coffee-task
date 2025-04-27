@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import type { User } from "@/types/auth";
 
+// Хранилище юзера
 export const useAuthStore = defineStore("auth", () => {
-  // Используем ref для создания реактивных данных с типом
   const isAuthenticated = ref<boolean>(false);
   const user = ref<User | null>(null);
 
@@ -35,7 +35,22 @@ export const useAuthStore = defineStore("auth", () => {
   }
 
   // Метод выхода
-  function logout() {
+  async function logout() {
+    try {
+      const { status, error } = await useFetch("/api/auth/logout");
+
+      if (error.value) {
+        throw new Error(error.value.data?.message || "Ошибка входа");
+      }
+
+      if (status.value === "success") {
+        user.value = null;
+        isAuthenticated.value = false;
+      }
+    } catch (err) {
+      console.error("Ошибка запроса:", err);
+      throw err; // Прокидываем ошибку дальше
+    }
     user.value = null;
     isAuthenticated.value = false;
   }
