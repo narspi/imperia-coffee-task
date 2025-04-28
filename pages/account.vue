@@ -22,11 +22,8 @@ const logout = async () => {
 const { data } = await useFetch<Product[]>("/api/products/get", {
   method: "POST",
   body: {},
-  server: true, // гарантируем, что запрос выполнится на сервере при SSR
-  key: "products", // чтобы правильно работал кэш
+  key: "products",
 });
-
-console.log(data.value);
 
 // После загрузки кладем в стор
 if (data.value) {

@@ -4,11 +4,7 @@ export interface Product {
   description: string;
   price: number;
   thumbnail: string;
-}
-
-export interface ProductsResponse {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
+  meta: {
+    createdAt: string;
+  };
 }

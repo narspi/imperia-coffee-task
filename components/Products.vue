@@ -8,16 +8,17 @@ const productsStore = useProductsStore();
     <h2 class="products__title">Наши товары</h2>
     <article class="products__grid">
       <div
-        v-for="product in productsStore.filteredProducts.value"
+        v-for="product in productsStore.filteredProducts"
         :key="product.id"
         class="products__card"
       >
-        <img
+        <!-- Временно убрал изображения, так как апи похоже имеет лимит на изображения -->
+        <!-- <img
           :src="product.thumbnail"
           :alt="`Изображение: ${product.title}`"
           class="products__image"
           loading="lazy"
-        />
+        /> -->
         <h3 class="products__name">{{ product.title }}</h3>
         <p class="products__description">{{ product.description }}</p>
         <p class="products__price">$ {{ product.price }}</p>
