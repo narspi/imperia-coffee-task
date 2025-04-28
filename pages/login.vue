@@ -20,75 +20,111 @@ const login = async () => {
 </script>
 
 <template>
-  <div class="container">
-    <div class="login-box">
-      <h2>Вход</h2>
-      <form @submit.prevent="login">
-        <div class="input-group">
-          <label>Логин</label>
-          <input type="email" placeholder="Введите ваш email" v-model="email" />
+  <div class="login">
+    <div class="login__box">
+      <h2 class="login__title">Вход</h2>
+      <form @submit.prevent="login" class="login__form">
+        <div class="login__input-group">
+          <label class="login__label">Логин</label>
+          <input
+            type="email"
+            placeholder="Введите ваш email"
+            v-model="email"
+            class="login__input"
+          />
         </div>
-        <div class="input-group">
-          <label>Пароль</label>
+        <div class="login__input-group">
+          <label class="login__label">Пароль</label>
           <input
             type="password"
             placeholder="Введите ваш пароль"
             v-model="password"
+            class="login__input"
           />
         </div>
-        <button type="submit" class="login-button">Войти</button>
+        <button type="submit" class="login__button">Войти</button>
       </form>
-      <p v-if="errorMessage">{{ errorMessage }}</p>
+      <p v-if="errorMessage" class="login__error">{{ errorMessage }}</p>
     </div>
   </div>
 </template>
 
-<style>
-.container {
+<style scoped lang="scss">
+.login {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #f4f4f4;
-}
 
-.login-box {
-  width: 300px;
-  padding: 20px;
-  background: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  text-align: center;
-}
+  &__box {
+    width: 300px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+  }
 
-.input-group {
-  margin-bottom: 15px;
-  text-align: left;
-}
+  &__title {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+  }
 
-.input-group label {
-  display: block;
-  margin-bottom: 5px;
-}
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
 
-.input-group input {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+  &__input-group {
+    margin-bottom: 15px;
+    text-align: left;
+  }
 
-.login-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
+  &__label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    color: #555;
+  }
 
-.login-button:hover {
-  background-color: #0056b3;
+  &__input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
+
+  &__error {
+    margin-top: 15px;
+    color: red;
+    font-size: 14px;
+  }
 }
 </style>
